@@ -1,0 +1,18 @@
+.spinnerContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    &.small {
+        height: 50vh;
+    }
+
+    &.default {
+        height: 100vh;
+    }
+
+    &.large {
+        height: 150vh;
+    }
+}
