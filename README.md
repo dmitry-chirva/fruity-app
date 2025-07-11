@@ -1,50 +1,103 @@
-# React + TypeScript + Vite
+# Fruity App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A lightweight **React + TypeScript** single‑page application that lets users browse, group and analyse a catalogue of fruits.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ▶️ Live Demo
 
-## Expanding the ESLint configuration
+Coming soon — simply run locally following the steps below.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+---
 
-- Configure the top-level `parserOptions` property like this:
+## Features
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+| Category         | Details                                                                                   |
+| ---------------- | ----------------------------------------------------------------------------------------- |
+| Fetch & cache    | Retrieves fruit data from a configurable REST API (`FRUIT_API`).                     |
+| List & table views | Switch between **List** and **Table** layouts.                                            |
+| Dynamic grouping | Group by *Family*, *Order*, *Genus* or view flat list.                                    |
+| Jar & calories   | Add any fruit(s) to a personal "Jar", view running calorie total and a pie‑chart breakdown. |
+
+---
+
+## Tech Stack
+
+* **React 18 / TS 5** – UI & state logic
+* **Zustand** – global, minimal state slice
+* **Ant Design v5** – ready‑made components & design token system
+* **Recharts** – responsive charts (pie)
+* **Vite** – blazing‑fast bundler & dev‑server
+* **Sass Modules** – scoped, theme‑friendly styles
+
+---
+
+## Getting Started
+
+### 1 · Clone & install
+
+```bash
+$ git clone https://github.com/dmitry-chirva/fruity-app.git
+$ cd fruity-app
+$ npm i        # or pnpm / yarn
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### 2 · Environment
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Create `.env.local` in the project root:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+VITE_FRUIT_API=https://www.fruityvice.com
 ```
+
+> `VITE_FRUIT_API` is injected at build time; feel free to swap in a mock during development.
+> **API reference:** [https://www.fruityvice.com](https://www.fruityvice.com)
+
+### 3 · Run dev server
+
+```bash
+npm run dev   # http://localhost:5173
+```
+
+Hot‑reload is enabled out of the box.
+
+### 4 · Production build
+
+```bash
+npm run build  # dist/ ready for any static host
+```
+
+Preview locally:
+
+```bash
+npm run preview  # http://localhost:4173
+```
+
+---
+
+## Project Structure
+
+```
+src/
+ ├─ api/               # API layer (fetch, adapters)
+ ├─ features/          # Domain UI (fruit, jar, …)
+ │   ├─ fruit/
+ │   │   ├─ views/     # Table/List subviews
+ │   │   └─ FruitSection.tsx
+ │   └─ jar/
+ ├─ shared/            # Reusable utils, hooks, enums…
+ ├─ store/             # Zustand slices (typed)
+ ├─ App.tsx
+ └─ main.tsx           # Vite entry‑point
+```
+
+---
+
+## Useful Scripts
+
+| Script            | Purpose                         |
+| ----------------- |---------------------------------|
+| `npm run dev`     | Launch Vite dev‑server with HMR |
+| `npm run build`   | Production bundle (ES + CSS)    |
+| `npm run preview` | Serve built files locally       |
+| `npm run lint`    | ESLint with recommended rules   |

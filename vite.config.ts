@@ -1,16 +1,19 @@
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 
-export default defineConfig({
-  plugins: [react()],
-  server: {
-    proxy: {
-      '/api': {
-        target: 'https://www.fruityvice.com',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '/api'),
-        secure: true,
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd());
+  return {
+    plugins: [react()],
+    server: {
+      proxy: {
+        '/api': {
+          target: env.VITE_FRUIT_API,
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, '/api'),
+          secure: true,
+        },
       },
     },
-  },
+  };
 });

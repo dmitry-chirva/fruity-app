@@ -1,16 +1,16 @@
 const apiConfig = {
-  baseUrl: '/api',
+  baseUrl: import.meta.env.VITE_FRUIT_API ?? '/api',
 };
 
 const fruitsApiService = {
   getFruits: async () => {
-    try {
-      const response = await fetch(`${apiConfig.baseUrl}/fruit/all`);
-      return await response.json();
-    } catch (error) {
-      console.error('Error fetching fruits:', error);
-      throw error;
+    const response = await fetch(`${apiConfig.baseUrl}/fruit/all`);
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
     }
+
+    return await response.json();
   },
 };
 

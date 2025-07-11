@@ -17,6 +17,7 @@ export default function useFetchFruits() {
       setFruits(data);
     } catch (err: unknown) {
       if (err instanceof Error) {
+        console.error('Error fetching fruits:', err);
         setError(err.message);
       }
     } finally {
