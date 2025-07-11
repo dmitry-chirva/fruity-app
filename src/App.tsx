@@ -1,11 +1,7 @@
-import React, { useEffect } from 'react';
-import { ConfigProvider, Layout, notification } from 'antd';
+import React from 'react';
+import { ConfigProvider, Layout, App as AntdApp } from 'antd';
 
-import useFetchFruits from './api/fruits/useFetchFruits';
 import Jar from './features/jar/Jar';
-import Spinner from './shared/components/Spinner/Spinner';
-import EmptyState from './shared/components/EmptyState/EmptyState';
-import useEffectOnce from './shared/hooks/useEffectOnce';
 
 import styles from './App.module.scss';
 import FruitSection from './features/fruit/FruitSection.tsx';
@@ -13,35 +9,10 @@ import FruitSection from './features/fruit/FruitSection.tsx';
 const { Header, Content } = Layout;
 
 const App: React.FC = () => {
-  const { fetchFruits, loading, error } = useFetchFruits();
-
-  useEffectOnce(() => {
-    fetchFruits();
-  });
-
-  useEffect(() => {
-    if (error) {
-      notification.error({
-        message: 'Error',
-        description: 'Failed to fetch fruits. Please try again later.',
-      });
-    }
-  }, [error]);
-
-  const handleRetry = () => {
-    fetchFruits();
-  };
-
-  const contentEl = loading ? (
-    <Spinner />
-  ) : (
+  const contentEl = (
     <Content className={styles.content}>
       <div className={styles.leftSection}>
-        {error ? (
-          <EmptyState message="Error loading fruits" onRetry={handleRetry} />
-        ) : (
-          <FruitSection />
-        )}
+        <FruitSection />
       </div>
       <div className={styles.rightSection}>
         <Jar />
@@ -76,12 +47,14 @@ const App: React.FC = () => {
         },
       }}
     >
+      <AntdApp>
       <Layout className={styles.layout}>
         <Header className={styles.header}>
           <div className={styles.logo}>FRUITY APP</div>
         </Header>
         {contentEl}
       </Layout>
+      </AntdApp>
     </ConfigProvider>
   );
 };
