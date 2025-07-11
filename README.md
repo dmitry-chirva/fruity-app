@@ -6,7 +6,7 @@ A lightweight **React + TypeScript** single‑page application that lets users b
 
 ## ▶️ Live Demo
 
-Coming soon — simply run locally following the steps below.
+[Link to demo](https://fruity-app-ebon.vercel.app/)
 
 ---
 
@@ -95,9 +95,10 @@ src/
 
 ## Useful Scripts
 
-| Script            | Purpose                         |
-| ----------------- |---------------------------------|
+| Script            | Purpose                      |
+|-------------------|------------------------------|
 | `npm run dev`     | Launch Vite dev‑server with HMR |
-| `npm run build`   | Production bundle (ES + CSS)    |
-| `npm run preview` | Serve built files locally       |
-| `npm run lint`    | ESLint with recommended rules   |
+| `npm run build`   | Production bundle (ES + CSS) |
+| `npm run preview` | Serve built files locally    |
+| `npm run lint`    | ESLint with recommended rules |
+| `npm run format`  | Format the code              |
