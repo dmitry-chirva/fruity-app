@@ -1,5 +1,5 @@
 const apiConfig = {
-  baseUrl: import.meta.env.VITE_FRUIT_API ?? '/api',
+  baseUrl: '/api',
 };
 
 const fruitsApiService = {
