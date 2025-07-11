@@ -1,0 +1,35 @@
+@use '../../shared/styles/card';
+
+.fruitSection {
+  @extend %card;
+  height: 100%;
+}
+
+.fruitHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.fruitListItem {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.collapsePanel {
+  margin-bottom: 10px;
+}
+
+.collapsePanelHeader {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.fruitListContainer {
+  @extend %scrollable;
+}

@@ -1,14 +1,14 @@
-import { useEffect, useRef } from 'react';
+import { EffectCallback, useEffect, useRef } from 'react';
 
-const useEffectOnce = (effect) => {
-    const hasRun = useRef(false);
+const useEffectOnce = (effect: EffectCallback) => {
+  const hasRun = useRef(false);
 
-    useEffect(() => {
-        if (!hasRun.current) {
-            effect();
-            hasRun.current = true;
-        }
-    }, [effect]);
+  useEffect(() => {
+    if (!hasRun.current) {
+      effect();
+      hasRun.current = true;
+    }
+  }, [effect]);
 };
 
 export default useEffectOnce;

@@ -1,24 +1,36 @@
 import React from 'react';
 
-import { Select } from 'antd';
+import { Form, Select } from 'antd';
 
-import { useFruitsStore } from '../../store/fruitsStore';
+import { useFruitSlice } from '../../store/fruit.slice.ts';
 import { FRUIT_ATTRIBUTE_TYPES } from '../../shared/constants/fruit-attribute-types';
 
+import styles from './GroupByFruitAttribute.module.scss';
+
 const GroupByFruitAttribute: React.FC = () => {
-    const setSelectedGroup = useFruitsStore((state) => state.setSelectedGroup);
+  const setSelectedGroup = useFruitSlice((state) => state.setGroup);
 
-    const handleGroupChange = (selectedValue: string) => {
-        setSelectedGroup(selectedValue);
-    }
+  const handleGroupChange = (selectedValue: string) => {
+    setSelectedGroup(selectedValue);
+  };
 
-    return (
-        <Select defaultValue={FRUIT_ATTRIBUTE_TYPES.NONE} onChange={handleGroupChange} style={{ width: 200 }}>
-            {Object.values(FRUIT_ATTRIBUTE_TYPES).map(option => (
-                <Select.Option key={option} value={option}>{option}</Select.Option>
-            ))}
+  return (
+    <Form layout="horizontal">
+      <Form.Item className={styles.formItem} label="Group by">
+        <Select
+          defaultValue={FRUIT_ATTRIBUTE_TYPES.NONE}
+          onChange={handleGroupChange}
+          style={{ width: 200 }}
+        >
+          {Object.values(FRUIT_ATTRIBUTE_TYPES).map((option) => (
+            <Select.Option key={option} value={option}>
+              {option}
+            </Select.Option>
+          ))}
         </Select>
-    )
+      </Form.Item>
+    </Form>
+  );
 };
 
 export default GroupByFruitAttribute;

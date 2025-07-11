@@ -1,48 +1,53 @@
 import React, { useMemo } from 'react';
-import { Button, List } from 'antd';
+import { Button, Card, Tabs } from 'antd';
 
-import { useFruitsStore } from '../../store/fruitsStore';
+import { useJarSlice } from '../../store/jar.slice.ts';
 
 import styles from './Jar.module.scss';
+import { calculateCalories } from '../../shared/utils/calculate-calories.ts';
+import { JarViewMode } from '../../shared/enums/jar.enum.ts';
+import JarListView from './views/JarListView.tsx';
+import JarPieView from './views/JarPieView.tsx';
 
 const Jar: React.FC = () => {
-    const jar = useFruitsStore((state) => state.jar);
-    const removeJarById = useFruitsStore((state) => state.removeJarById);
-    const clearJar = useFruitsStore((state) => state.clearJar);
+  const { jar, jarView, setJarView, removeFruit, clearAllFruits } = useJarSlice();
 
-    const totalCalories = useMemo(() => jar.reduce((sum, fruit) => sum + (fruit.nutritions.calories || 0), 0), [jar]);
+  const totalCalories = useMemo(() => calculateCalories(jar), [jar]);
 
-    return (
-        <div className={styles.jar}>
-            <header className={styles.jarHeader}>
-                <h2>Jar</h2>
-                {!!jar.length && (
-                    <Button danger
-                            type='primary'
-                            onClick={() => clearJar()}>
-                        Remove All
-                    </Button>
-                )}
-            </header>
-            <List
-                bordered
-                dataSource={jar}
-                renderItem={(fruit) => (
-                    <List.Item actions={[
-                        <Button size='small'
-                                type='primary'
-                                danger
-                                onClick={() => removeJarById(fruit.id)}>
-                            Delete
-                        </Button>
-                    ]}>
-                        {fruit.name} ({fruit.nutritions.calories} calories)
-                    </List.Item>
-                )}
-            />
-            <div className={styles.totalCalories}>Total Calories: {totalCalories}</div>
-        </div>
-    );
+  return (
+    <Card
+      className={styles.jar}
+      title={
+        <header className={styles.jarHeader}>
+          <h2>Jar</h2>
+          {!!jar.length && (
+            <Button danger type="primary" onClick={() => clearAllFruits()}>
+              Remove All
+            </Button>
+          )}
+        </header>
+      }
+    >
+      <Tabs
+        size="small"
+        activeKey={jarView}
+        onChange={(groupKey) => setJarView(groupKey as JarViewMode)}
+        items={[
+          {
+            key: JarViewMode.List,
+            label: JarViewMode.List,
+            children: <JarListView jar={jar} removeFruit={removeFruit} />,
+          },
+          {
+            key: JarViewMode.Pie,
+            label: JarViewMode.Pie,
+            children: <JarPieView jar={jar} />,
+          },
+        ]}
+      />
+      <div className={styles.totalCalories}>Total Calories: {totalCalories}</div>
+    </Card>
+  );
 };
 
 export default Jar;

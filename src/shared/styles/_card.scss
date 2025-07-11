@@ -1,0 +1,10 @@
+/* TODO add wrapper to collapse component and encapsulate style there */
+%card {
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+%scrollable {
+  max-height: calc(100vh - 340px);
+  overflow-y: auto;
+}
